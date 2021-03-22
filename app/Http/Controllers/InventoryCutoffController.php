@@ -18,6 +18,11 @@ class InventoryCutoffController extends Controller
         group by Cutoffdate');
     }
 
+    public function inventoryItems()
+    {
+        return DB::select('select ID,ItemName from Item');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
