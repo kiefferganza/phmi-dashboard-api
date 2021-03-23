@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 
 class InventoryCutoffController extends Controller
 {
@@ -41,7 +41,19 @@ class InventoryCutoffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $arr = [];
+        $val = $request->all();
+
+        foreach ($val as $value) {
+            DB::insert('insert into InventoryDaily (Cutoffdate, itemID, Quantity) values (?, ?, ?)',
+                [
+                    $value['date'],
+                    $value['itemID'],
+                    $value['quantity'],
+                ]);
+        }
+
+        return '!';
     }
 
     /**
