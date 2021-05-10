@@ -43,9 +43,18 @@ class InventoryCutoffController extends Controller
     {
         $arr = [];
         $val = $request->all();
+        $conn = '';
 
         foreach ($val as $value) {
-            DB::insert('insert into InventoryDaily (Cutoffdate, itemID, Quantity) values (?, ?, ?)',
+            if($value['database'] == 'Davao'){
+                $conn = 'sqlsrv';
+            }elseif ($value['database'] == 'Tagum') {
+                $conn = 'sqlsrv_tagum';
+            }else{
+                $conn = 'sqlsrv_digos';
+            }
+            
+            DB::connection($conn)->insert('insert into InventoryDaily (Cutoffdate, itemID, Quantity) values (?, ?, ?)',
                 [
                     $value['date'],
                     $value['itemID'],
